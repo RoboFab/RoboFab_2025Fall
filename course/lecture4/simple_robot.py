@@ -11,7 +11,7 @@ def user_interface_func():
     for joint_id in range(simple_robot.n_joints):
         changed, q[joint_id] = psim.SliderFloat(f"Joint {joint_id}", q[joint_id].item(), lb[joint_id], ub[joint_id])
         if changed:
-            draw_robot("simple_robot", simple_robot, q)
+            draw_robot("simple_robot", simple_robot, q, draw_part=True)
             draw_link_frames("simple_robot", simple_robot, q)
 
 # Load a robot from file
@@ -27,7 +27,7 @@ ps.set_up_dir("z_up")
 ps.set_front_dir("neg_y_front")
 
 # visualize robot
-draw_robot("simple_robot", simple_robot, q)
+draw_robot("simple_robot", simple_robot, q, draw_part = True)
 draw_link_frames("simple_robot", simple_robot, q)
 
 # infinite loop to show the robot meshes

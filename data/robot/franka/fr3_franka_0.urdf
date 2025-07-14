@@ -53,14 +53,18 @@
       <inertia ixx="0.023927316485107913" ixy="1.3317903455714081e-05" ixz="-0.00011404774918616684" iyy="0.0224821613275756" iyz="-0.0019950320628240115" izz="0.006350098258530016" />
     </inertial>
   </link>
+
   <joint name="fr3_joint1" type="revolute">
-    <origin rpy="3.3733762219710777e-17 4.578862715028008e-18 4.66009163708547e-17" xyz="1.6596574278000728e-17 2.185901076412172e-17 0.333" />
+    <origin rpy="3.3733762219710777e-17 4.578862715028008e-18 4.66009163708547e-17"
+    xyz="1.6596574278000728e-17 2.185901076412172e-17 0.333" />
     <parent link="fr3_link0" />
     <child link="fr3_link1" />
     <axis xyz="0 0 1" />
     <limit effort="87.0" lower="-2.7437" upper="2.7437" velocity="2.62" />
-    <safety_controller k_position="100.0" k_velocity="40.0" soft_lower_limit="-2.7437" soft_upper_limit="2.7437" />
-    <dynamics D="1" K="7000" damping="0.003" friction="0.2" mu_coulomb="0" mu_viscous="16" />
+    <safety_controller k_position="100.0" k_velocity="40.0"
+    soft_lower_limit="-2.7437" soft_upper_limit="2.7437" />
+    <dynamics D="1" K="7000" damping="0.003" friction="0.2"
+    mu_coulomb="0" mu_viscous="16" />
   </joint>
   
   <link name="fr3_link2">

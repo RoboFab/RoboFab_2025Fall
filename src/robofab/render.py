@@ -4,10 +4,12 @@ import pytorch_kinematics as pk
 import torch
 from trimesh import Trimesh, Scene
 
-def draw_robot(name: str, robot_chain: pk.SerialChain, joint_angle: torch.tensor):
+def draw_robot(name: str, robot_chain: pk.SerialChain, joint_angle: torch.tensor, **args):
+    draw_part = args.get("draw_part", False)
     links = robot_chain.get_links()
     ret = robot_chain.forward_kinematics(joint_angle)
     scene = Scene()
+    link_id = 0
     for link in links:
         for visual in link.visuals:
             if visual.geom_param is not None:
@@ -16,9 +18,13 @@ def draw_robot(name: str, robot_chain: pk.SerialChain, joint_angle: torch.tensor
                 T = ret[link.name].get_matrix().numpy().reshape(4, 4)
                 new_mesh.apply_transform(T)
                 scene.add_geometry(new_mesh)
+                if draw_part:
+                    ps.register_surface_mesh(f"{link.name}", vertices=new_mesh.vertices, faces=new_mesh.faces)
+                link_id = link_id + 1
 
     scene_mesh = scene.to_mesh()
-    ps.register_surface_mesh(f"{name}", vertices=scene_mesh.vertices, faces=scene_mesh.faces, color=(1, 1, 1, 1))
+    if not draw_part:
+        ps.register_surface_mesh(f"{name}", vertices=scene_mesh.vertices, faces=scene_mesh.faces, color=(1, 1, 1, 1))
     return scene_mesh
 
 def draw_link_frames(name: str, robot_chain: pk.SerialChain, joint_angle: torch.tensor):

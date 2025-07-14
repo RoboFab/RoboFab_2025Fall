@@ -36,6 +36,7 @@
     <parent link="link1"/>
     <child link="link2"/>
     <axis xyz="0 0 1" />
+    <origin xyz ="0.5 0 0"/>
     <limit lower="-1.57" upper="1.57" velocity="2.62" effort="50" />
   </joint>
 </robot>
