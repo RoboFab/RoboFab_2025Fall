@@ -14,14 +14,14 @@ def compute_robot_frames(joint_xyz,
                          joint_angles):
     frames = [np.eye(4)]
     for joint_id in range(joint_angles.shape[0]):
-        rot = R.from_rotvec(joint_axis[joint_id] * joint_angles[joint_id], degrees=False)
         T_rot = np.eye(4)
-        T_rot[:3, :3] = rot.as_matrix()
+        T_rot[:3, :3] = R.from_rotvec(joint_axis[joint_id] * joint_angles[joint_id]).as_matrix()
+
         T_joint = np.eye(4)
         T_joint[:3, :3] = R.from_euler("XYZ", joint_rpy[joint_id]).as_matrix()
         T_joint[:3, 3] = joint_xyz[joint_id]
-        T = T_joint @ T_rot
-        frame = frames[-1] @ T
+
+        frame = frames[-1] @ T_joint @ T_rot
         frames.append(frame)
     return frames
 
@@ -40,8 +40,8 @@ def user_interface_func():
                                                            v_max=joint_ubs[joint_id])
         if changed:
             frames = compute_robot_frames(joint_xyz, joint_rpy, joint_axis, joint_angles)
-            draw_frames("robot", frames)
             draw_mesh(link_meshes, frames)
+            draw_frames("robot", frames)
 
 if __name__ == "__main__":
     joint_xyz = np.array([[0, 0, 0], [0.5, 0, 0]], dtype=np.float64)
@@ -65,8 +65,8 @@ if __name__ == "__main__":
 
     # draw frames
     frames = compute_robot_frames(joint_xyz, joint_rpy, joint_axis, joint_angles)
-    draw_frames("robot", frames)
     draw_mesh(link_meshes, frames)
+    draw_frames("robot", frames)
 
     # infinite loop to show the robot meshes
     ps.set_user_callback(user_interface_func)
