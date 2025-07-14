@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+
+<robot name="simple_robot">
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/visual/base_link.obj" />
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="link1">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/visual/link1.obj" />
+      </geometry>
+    </visual>
+  </link>
+
+  <link name="link2">
+    <visual>
+      <geometry>
+        <mesh filename="meshes/visual/link2.obj" />
+      </geometry>
+    </visual>
+  </link>
+
+  <joint name="joint1" type="revolute">
+    <parent link="base_link"/>
+    <child link="link1"/>
+    <axis xyz="0 0 1" />
+    <limit lower="-1.57" upper="1.57" velocity="2.62" effort="50" />
+  </joint>
+
+  <joint name="joint2" type="revolute">
+    <parent link="link1"/>
+    <child link="link2"/>
+    <axis xyz="0 0 1" />
+    <limit lower="-1.57" upper="1.57" velocity="2.62" effort="50" />
+  </joint>
+</robot>
